@@ -1,0 +1,41 @@
+<section class="step" id="build-a-form">
+  <h1>3. Build a form</h1>
+  <p>You can't create a credit-card transaction without a customer's credit-card information. The home page of our app will be a very simple payment form that takes the card number, expiration month, experation year, and CVC of a credit card.</p>
+  <p>First, we need to create a home page.</p>
+  <p>Run the following in your terminal:</p>
+  <pre>cd ~/stripe_app/views
+touch home.handlebars
+  </pre>
+
+  <p>In <code>~/stripe_app/views/home.handlebars</code>, add the following HTML:</p>
+  <pre>&lt;h1&gt;Make a Payment&lt;/h1&gt;
+
+&lt;form action="javascript:" id="payment-form"&gt;
+  &lt;span class="payment-errors"&gt;&lt;/span&gt;
+
+  &lt;label&gt;Card number: 
+    &lt;input type="text" name="card[number]"&gt;&lt;/label&gt;
+
+  &lt;label&gt;Expiration month: 
+    &lt;input type="text" name="card[exp_month]"&gt;&lt;/label&gt;
+
+  &lt;label&gt;Expiration year: 
+    &lt;input type="text" name="card[exp_year]"&gt;&lt;/label&gt;
+
+  &lt;label&gt;CVC: &lt;input type="text" name="card[cvc]"&gt;&lt;/label&gt;
+  
+  &lt;button id="val-provider"&gt;Fill in test values&lt;/button&gt;
+  &lt;button type="reset"&gt;Reset&lt;/button&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</pre>
+
+  <p>We can't load this form in the browser until we've set up an application route to serve it.</p>
+
+  <p>In <code>~/stripe_app/app.js</code>, add a route:</p>
+  <pre>
+app.get('/', function(req, res) {
+  res.render('home');
+});</pre>
+
+  <p>You should be able to run your app now to verify that <code>http://localhost:8888</code> displays a payment form. The form doesn't do anything yet, but it will!</p>
+</section>

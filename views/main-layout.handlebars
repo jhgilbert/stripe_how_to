@@ -1,0 +1,20 @@
+<section class="step" id="main-layout">
+  <h1>2. Create a main layout</h1>
+  <p>Technically, our application will only have one page, but it's nice to have a reusable layout in case we feel like extending it. We're using Handlebars, so we'll follow the conventions of that library.</p>
+  <p>From your terminal:
+  <pre>cd ~/stripe_app/views/layouts
+touch main.handlebars
+  </pre>
+  <p>Add this HTML to <code>~/stripe_app/views/layouts/main.handlebars</code>:
+  <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Stripe Demo&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    \{{{body}}}
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+  <p>This will give you a basic HTML boilerplate page that you can populate with various content, depending on which route the user visits.</p>
+</section>

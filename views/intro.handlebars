@@ -1,0 +1,20 @@
+<section class="step" id="intro">
+  <h1>Introduction</h1>
+  <p><a href="https://stripe.com">Stripe</a> allows you to accept credit-card payments online. Stripe has an extensive API that's quite <a href="https://stripe.com/docs/api">well-documented</a>.</p>
+
+  <p>When I tried to use Stripe for the first time a few years ago, I used one of their provided <a href="https://stripe.com/docs/libraries">libraries</a>, which abstracted away much of the process. This was convenient, but also a little unsettling -- I had no idea what was really going on when a transaction was made. So I embraced this how-to assignment as an opportunity to skip the libraries and figure it out, and to write some vanilla JavaScript (which I don't have much experience doing).</p>
+
+  <p>In this tutorial, we'll write an application from scratch that can create Stripe transactions without using any libraries. Here are the steps of creating a Stripe transaction:<p>
+
+  <ol>
+    <li>Collect credit-card information via a form</li>
+    <li>Prevent form submission to the back end, and instead send the form data to Stripe directly via AJAX</li>
+    <li>Receive a token from Stripe in response that serves as a reference to the credit-card data stored on Stripe's servers</li>
+    <li>Send <strong>only</strong> the token (not the credit-card data) to our back end</li>
+    <li>Use a sensitive HTTP call from the back end to create a charge by sending the token, an amount, and a currency to the Stripe API</li>
+  </ol>
+
+  <p>In summary, both a front-end API call and a back-end API call are required to safely create a transaction on Stripe. Our application will follow the steps above to accomplish that.</p>
+
+  <p>I hope you enjoy this tutorial -- I learned a lot while building it.</p>
+</section>

@@ -1,0 +1,35 @@
+<section class="step" id="test-data">
+  <h1>4. Provide test data</h1>
+  <p>You'll get tired of typing in fake credit-card data as you test your work. We can write a JavaScript function that provides the data for us with the click of a button.</p>
+  <p>First, we need to create the JavaScript file that we'll use to set up the front-end functionality of our application.</p>
+  <p>Type the following commands in your terminal:</p>
+  <pre>cd ~/stripe_app
+mkdir public
+cd public
+mkdir scripts
+cd scripts
+touch diy_stripe.js</pre>
+  <p>We'll continually add JavaScript to this new <code>.js</code> file.</p>
+
+  <p>Add the following code to <code>~/stripe_app/public/scripts/diy_stripe.js</code>:</p>
+  <pre>var paymentForm = document.getElementById("payment-form");
+
+// fill in values for transaction when
+// "Fill in test values" button is clicked
+
+var valueProvider = document.getElementById("val-provider");
+
+valueProvider.addEventListener("click", function(event) {
+  event.preventDefault();
+  var els = paymentForm.elements;
+  els["card[number]"].value = "4242424242424242";
+  els["card[exp_month]"].value = "11";
+  els["card[exp_year]"].value = "2017";
+  els["card[cvc]"].value = "001";
+});</pre>
+  <p>Add this script to <code>~/stripe_app/views/home.handlebars</code>, below the form:</p>
+  <pre>&lt;script src="scripts/diy_stripe.js"&gt;&lt;/script&gt;</pre>
+
+  <p>Restart your app, load the form, and give the "Fill in test values" button a try. The form fields should populate, and the "Reset" button should blank them out again. Magic!</p>
+  <p>While you can change some card details in the form, note that the card number of 4242424242424242 should not be changed. That is the standard test card number for Stripe.</p>
+</section>
