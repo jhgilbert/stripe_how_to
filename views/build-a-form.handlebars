@@ -1,6 +1,6 @@
 <section class="step" id="build-a-form">
   <h1>3. Build a form</h1>
-  <p>You can't create a credit-card transaction without a customer's credit-card information. The home page of our app will be a very simple payment form that takes the card number, expiration month, experation year, and CVC of a credit card.</p>
+  <p>You can't create a credit-card transaction without a customer's credit-card information. The home page of our app will be a very simple payment form that takes the card number, expiration month, expiration year, and CVC of a credit card.</p>
   <p>First, we need to create a home page.</p>
   <p>Run the following in your terminal:</p>
   <pre>cd ~/stripe_app/views
@@ -27,6 +27,10 @@ touch home.handlebars</pre>
   &lt;button type="reset"&gt;Reset&lt;/button&gt;
   &lt;button type="submit"&gt;Submit&lt;/button&gt;
 &lt;/form&gt;</pre>
+
+  <p>The field names used in this form are important -- they are the literal names required by Stripe. It's important to use the exact input names shown in the code, or your request to Stripe won't work. Notice the interesting bracket notation of such names as <code>card[exp_year]</code>. Some server-side technologies accept this sort of notation, building an object on the other end (in this case, a <code>card</code> object with the attributes of <code>number</code>, <code>exp_month</code>, and <code>cvc</code>).</p>
+
+  <p>Notice that the form's action is <code>javascript:</code>. This is how we indicate that we intend to process the form data on the client side, not on the server side (on the front end, not on the back end of our app). This way, the data won't even submit to our server by accident.</p>
 
   <p>We can't load this form in the browser until we've set up an application route to serve it.</p>
 

@@ -28,7 +28,8 @@
   });
 });</pre>
   <p>This route accepts a Stripe-created token object (originally requested by, and then forwarded by, the front end), then submits that token to the Stripe API, along with the amount of the charge and the type of currency.</p>
-  <p>We're just using test API keys, but this is where our super-secret Stripe API key would live. <strong>If anyone else got ahold of this key, they could steal all of our money from our Stripe account! That's why you never check secret keys into a public GitHub repo.</strong> That's also why the front end doesn't make this HTTP request. It's too sensitive and must be made on the back end.</p>
+  <p>The route first creates a charge object, giving the object an amount (we've gone with ten dollars but you're welcome to change it) and a currency. Notice that the <code>source</code> of the charge object is set to the token that was forwarded from the front end.</p>
+  <p>Notice that our HTTP request to Stripe includes an authorization header and uses our Stripe API key. We're just using test API keys, but this is where our super-secret Stripe API key would live. <strong>If anyone else got ahold of this key, they could steal all of our money from our Stripe account! That's why you never check secret keys into a public GitHub repo.</strong> That's also why the front end doesn't make this HTTP request. It's too sensitive and must be made on the back end.</p>
   <p>Now we need a function in <code>~/stripe_app/public/scripts/diy_stripe.js</code> that will send the Stripe token to the <code>/submit_payment</code> route we just created:</p>
   <pre>
 // submit Stripe-provided token to back end
@@ -44,7 +45,8 @@ function submitToken(tokenObj) {
   });
   req.send(JSON.stringify({token: tokenObj.id}));
 };</pre>
-  <p>Now, in <code>diy_stripe.js</code>, replace</p>
+  <p>This function accepts a token object as a parameter, then sends that token to our back end route that will finalize the credit-card charge. The function also prints the results of the transaction to the console, just for our informational purposes. Normally you wouldn't want to send sensitive back end data to the front end for printing -- you would just print it to the server console directly from your <code>app.js</code> file. But this is all just test data, so it's safe for now.</p>
+  <p>Now, we need to call this new function. In <code>diy_stripe.js</code>, replace</p>
   <pre>// WE WILL SUBMIT TOKEN TO THE BACK END HERE</pre>
   <p>with</p>
   <pre>submitToken(response);</pre>
