@@ -9,8 +9,7 @@ touch app.js
 npm init
 npm install body-parser express express-handlebars request --save
 mkdir views
-mkdir views/layouts
-</pre>
+mkdir views/layouts</pre>
   <p>Add the following code to <code>~/stripe_app/app.js</code>. It's all boilerplate -- nothing too exciting.</p>
   <pre>var express = require('express');
 var app = express();
@@ -38,8 +37,7 @@ app.use(bodyParser.json());
 // Listen on designated port
 app.listen(app.get('port'), function() {
   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl+C to terminate.');
-});
-  </pre>
+});</pre>
   <p>Verify that your application runs without errors:</p>
   <pre>cd ~/stripe_app
 node app.js</pre>
