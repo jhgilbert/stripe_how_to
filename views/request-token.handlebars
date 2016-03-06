@@ -31,8 +31,7 @@ function buildFormFieldParams(formElements) {
   }).join('&');
 
   return params;
-}
-  </pre>
+}</pre>
 
   <p>Now we need a function that will send payment data to Stripe's servers when the user has submitted the payment form. Stripe will store the card data on its servers, then respond to our AJAX call with a token that can be used later by our application's back end to use the stored card data without our back end actually having access to the card details.</p>
 
@@ -62,8 +61,7 @@ function getToken(event) {
   });
 
   req.send(params);
-};
-  </pre>
+};</pre>
   <p>The code above uses form data to build an HTTP request to send to the Stripe API. Stripe will respond with a token, which we will eventually forward to the back end of our application. For now, we're just going to log the token object to the console.</p>
   <p>Now we need to add an event listener to our payment form. Add this code to <code>~/stripe_app/public/scripts/diy_stripe.js</code>:</p>
   <pre>// request token from Stripe when
