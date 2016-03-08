@@ -8,7 +8,7 @@
   <p>Below the payment form, add your Handlebars template for each individual charge, along with an empty div where the charges list will eventually go:</p>
   <script src="https://gist.github.com/jhgilbert/57cd76f78a9bd72a0c34.js"></script>
   <p>(We had to use a gist here because the very site you're on is also rendered in Handlebars, which makes funky things happen to the code displayed. We'll also use a gist when line numbers help us see where to update code.)</p>
-  <p>Notice how each <code>\{{</code> in the template is escaped with a <code>\</code>. This is necessary to prevent your server from trying to render your Handlebars template too early. We don't want to use this template until we've made an AJAX call from the front end and received some charges to display.</p>
+  <p>This template will not display on its own in the browser in terms of being visible to the user; it's just sitting there silently, hiding dormant in a script tag, waiting for us to do something with it. Notice how each <code>\{{</code> in the template is escaped with a <code>\</code>. This is necessary to prevent your server from trying to render your Handlebars template too early. We don't want to use this template until we've made an AJAX call from the front end and received some charges to display.</p>
   <p>Now we need to add a few additional functions to <code>~/stripe_app/public/scripts/diy_stripe.js</code>.</p>
   <p>First, add a function that takes an array of charges, builds a context object, renders HTML via Handlebars, and drops that HTML into our empty charges div:</p>
   <script src="https://gist.github.com/jhgilbert/5cc0d4d4fe4de9270468.js"></script>
