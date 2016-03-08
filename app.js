@@ -18,6 +18,10 @@ app.get('/node-setup', function(req, res) {
   res.render('node-setup');
 });
 
+app.get('/request-refund', function(req, res) {
+  res.render('request-refund');
+});
+
 app.get('/main-layout', function(req, res) {
   res.render('main-layout');
 });

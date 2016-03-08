@@ -1,0 +1,59 @@
+<section class="step" id="request-refund">
+  <h1>7. Refund a charge</h1>
+  <p>Optionally, you can also refund a charge. To keep this tutorial short, we're going to avoid creating more HTML pages, so our code will be a bit smelly by the end. (An ideal design would be for our app to have its own "charge history" page that is separate from our transaction form page, but that would require wiring up more stuff than we have time for.)</p>
+  <p>Instead, we'll just take the charges list we already have from our original transaction request, render them under the payment form, and give the user a "Refund" button for each one.</p>
+  <p>Let's start with simply rendering the charges. Did you know that you can use Handlebars on the client side, too? It'll be a little messy, but it'll do for our purposes of sticking with one page and wrapping this thing up.</p>
+  <p>We need to pull Handlebars in from a CDN (library host) first. Add this line just above your <code>&lt;script&gt;</code> tag that imports <code>diy_stripe.js</code> in <code>~/stripe_app/views/home.handlebars</code>:
+  <pre>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"&gt;&lt;/script&gt;</pre>
+  <p>Below the payment form, add your Handlebars template for each individual charge, along with an empty div where the charges list will eventually go:</p>
+  <script src="https://gist.github.com/jhgilbert/57cd76f78a9bd72a0c34.js"></script>
+  <p>(We had to use a gist here because the very site you're on is also rendered in Handlebars, which makes funky things happen to the code displayed. We'll also use a gist when line numbers help us see where to update code.)</p>
+  <p>Notice how each <code>\{{</code> in the template is escaped with a <code>\</code>. This is necessary to prevent your server from trying to render your Handlebars template too early. We don't want to use this template until we've made an AJAX call from the front end and received some charges to display.</p>
+  <p>Now we need to add a few additional functions to <code>~/stripe_app/public/scripts/diy_stripe.js</code>.</p>
+  <p>First, add a function that takes an array of charges, builds a context object, renders HTML via Handlebars, and drops that HTML into our empty charges div:</p>
+  <script src="https://gist.github.com/jhgilbert/5cc0d4d4fe4de9270468.js"></script>
+  <p>Now, add a function that takes a charge ID and requests a refund from our application's back end. Our route for this doesn't exist yet, but it will in a moment.</p>
+  <pre>// forward a refund request to the app backend
+function submitRefund(charge_id) {
+  var req = new XMLHttpRequest();
+  req.open("POST", "/refund_charge", true);
+  req.addEventListener("load", function() {
+    console.log("Response to back end from Stripe after charge is refunded:")
+    console.log(JSON.parse(req.responseText)); 
+  });
+  req.send(JSON.stringify({charge: charge_id}));
+}</pre>
+  <p>Add a function that creates event listeners for all of our refund forms and submits the request to the back end:</p>
+  <pre>// put a listener on the refund forms
+function setRefundFormListeners() {
+  var refundForms = document.getElementsByClassName("refund-form");
+  for (var i = 0; i < refundForms.length; i++) {
+    refundForms[i].addEventListener("submit", function(event) {
+      event.preventDefault();
+      submitRefund(this.elements['charge_id'].value);
+    });
+  }
+}</pre>
+  <p>Now add lines 10 and 11 to your submitToken function to add the charges to your page and set the form listeners:</p>
+  <script src="https://gist.github.com/jhgilbert/03f83bfe54eb61f1565b.js"></script>
+  <p>Load your payment form in the browser, fill it out, and watch the list of charges populate under the payment form. We need to do one more thing to get the refund button to work, which is set up our back-end route for that action:</p>
+  <pre>app.post('/refund_charge', function(req, res) {
+  // * IMPORTANT WARNING *
+  // this is a test key -- never check a real server-side key into
+  // a public GitHub repo!
+  var stripe_api_key = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2';
+
+  var postObj = {
+    url: "https://api.stripe.com/v1/refunds",
+    headers: {'Authorization': 'Bearer ' + stripe_api_key},
+    charge: req.body.charge
+  };
+
+  // send the refund to Stripe
+  request(postObj, function(error, response, body) {
+    res.send(response.body);
+  });
+});</pre>
+  <p>Now you can view your payment form in the browser, fill it out, see the fake list of charges that Stripe returns for your imaginary account, click the Refund button on one of the charges, and view the result in the console.</p>
+  <p>At this point, you might refactor, as both the Stripe key and the Stripe API URL seem likely to change at some point, so using one variable for each of those would reduce code smell. But we're essentially finished with our grand tour of basic Stripe functionality. Nice work!</p>
+</section>

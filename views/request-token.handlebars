@@ -62,7 +62,7 @@ function getToken(event) {
 
   req.send(params);
 };</pre>
-  <p>The code above uses form data to build an HTTP request to send to the Stripe API. Stripe will respond with a token, which we will eventually forward to the back end of our application. For now, we're just going to log the token object to the console.</p>
+  <p>The code above uses form data to build an HTTP request to send to the Stripe API. (I struggled a bit with the request headers, but Stripe provided really helpful error messages that directed me to the right pages of the documentation -- try removing the headers to see these helpful error messages.) Stripe will respond with a token, which we will eventually forward to the back end of our application. For now, we're just going to log the token object to the console.</p>
   <p>Now we need to add an event listener to our payment form. Add this code to <code>~/stripe_app/public/scripts/diy_stripe.js</code>:</p>
   <pre>// request token from Stripe when
 // payment form is submitted
